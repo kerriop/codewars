@@ -1,16 +1,21 @@
-from urllib.parse import urlparse
+# from urllib.parse import urlparse
+
+# def domain_name(url):
+#     ret = urlparse(url).netloc.split('.')
+#     if ret == ['']:
+#         ret = urlparse(url).path
+#         ret = ret.split('.')
+#     print(ret)
+#     if ret[0] == 'www':
+#         return ret[1]
+#     else:
+#         return ret[0]
+
+import re
 
 
 def domain_name(url):
-    ret = urlparse(url).netloc.split('.')
-    if ret == ['']:
-        ret = urlparse(url).path
-        ret = ret.split('.')
-    print(ret)
-    if ret[0] == 'www':
-        return ret[1]
-    else:
-        return ret[0]
+    return re.search('(https?://)?(www\d?\.)?(?P<name>[\w-]+)\.', url).group('name')
 
 
 # print(domain_name("http://github.com/carbonfive/raygun"))  # == "github"
