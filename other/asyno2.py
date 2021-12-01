@@ -65,21 +65,70 @@
 # for i in range(5):
 #     print(i)
 
+# import asyncio
+#
+#
+# # Позаимствовано отсюда http://curio.readthedocs.org/en/latest/tutorial.html.
+#
+# async def countdown(number, n):
+#     while n > 0:
+#         print('T-minus', n, '({})'.format(number))
+#         await asyncio.sleep(1)
+#         n -= 1
+#
+#
+# loop = asyncio.get_event_loop()
+# tasks = [
+#     asyncio.ensure_future(countdown("A", 2)),
+#     asyncio.ensure_future(countdown("B", 3))]
+# loop.run_until_complete(asyncio.wait(tasks))
+# loop.close()
+
+import asyncio
+
+# async def speak():
+#     print('C')
+#     await asyncio.sleep(3)
+#     return 'D'
+
+# async def say_a_c():
+#     print('A')
+#     await asyncio.sleep(3)
+#     print('C')
+#
+#
+# async def say_b_d():
+#     print('B')
+#     await asyncio.sleep(3)
+#     print('D')
+#
+#
+# async def run():
+#     # will_speak = speak()
+#     # print('A')
+#     # print('B')
+#     # print(await will_speak)
+#     await say_a_c()
+#     await say_b_d()
+#
+#
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(run())
+
 import asyncio
 
 
-# Позаимствовано отсюда http://curio.readthedocs.org/en/latest/tutorial.html.
+async def meow(number):
+    print(f'starting {number}')
+    await asyncio.sleep(1)
+    print(f'stopping {number}')
 
-async def countdown(number, n):
-    while n > 0:
-        print('T-minus', n, '({})'.format(number))
-        await asyncio.sleep(1)
-        n -= 1
 
+async def run():
+    f = []
+    for x in range(1, 6):
+        f.append(meow(x))
+    await asyncio.wait(f)
 
 loop = asyncio.get_event_loop()
-tasks = [
-    asyncio.ensure_future(countdown("A", 2)),
-    asyncio.ensure_future(countdown("B", 3))]
-loop.run_until_complete(asyncio.wait(tasks))
-loop.close()
+loop.run_until_complete(run())
