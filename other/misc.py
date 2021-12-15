@@ -3,11 +3,25 @@
 #
 # print('--------------------')
 
-def my_range(n, start=0, step=1):
-    i = start
-    while i < n:
-        yield i
-        i += step
+# def my_range(n, start=0, step=1):
+#     i = start
+#     while i < n:
+#         yield i
+#         i += step
+#
+def my_range(start, stop=None, step=1):
+    if stop is None:
+        stop = start
+        start = 0
+    while stop > start:
+        yield start
+        start += step
+
+
+for i in my_range(10):
+    print(i)
+
+
 #
 #
 # # for x in my_range(5):
@@ -20,8 +34,6 @@ def my_range(n, start=0, step=1):
 #
 
 
-
-
 def my_decorator(input_arg):
     def the_real_decorator(function):
         def wrapper(*args, **kwargs):
@@ -31,6 +43,7 @@ def my_decorator(input_arg):
         return wrapper
 
     return the_real_decorator
+
 
 # gen_1 = (x for x in range(5))
 # gen_2 = (x for x in range(5, 10))
@@ -51,10 +64,13 @@ def my_decorator(input_arg):
 def subgenerator():
     yield 'World'
 
+
 def generator():
     yield 'Hello'
     yield from subgenerator()  # Запрашиваем значение из субгенератора
     yield '!'
+
+
 #
 # for i in generator():
 #     print(i, end=' ')
@@ -154,7 +170,6 @@ def factorial_recursive(n):
         return n
     else:
         return n * factorial_recursive(n - 1)
-
 
 # print(factorial_recursive(1))
 # print(factorial_recursive(2))
