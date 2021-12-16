@@ -1,3 +1,4 @@
+from collections import deque
 from typing import List, Optional
 
 
@@ -269,3 +270,80 @@ def peakIndexInMountainArray(arr: List[int]) -> int:
         else:
             right = mid - 1
     return left
+
+
+# 21
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def averageOfLevel(root: Optional[TreeNode]) -> List[float]:
+    # bfs
+    q = deque([root])
+
+    result = []
+
+    while q:
+        n = len(q)
+        level_sum = 0
+        for _ in range(n):
+            node = q.popleft()
+            level_sum += node.val
+
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        result.append(level_sum / n)
+
+    return result
+
+
+# 22
+def minDepth(root: Optional[TreeNode]) -> int:
+    if not root:
+        return 0
+    depth = 1
+
+    q = deque[root]
+
+    while q:
+        for _ in range(len(q)):
+            node = q.popleft()
+
+            if not node.left and not node.right:
+                return depth
+
+            if node.left:
+                q.append(node.left)
+
+            if node.right:
+                q.append(node.right)
+        depth += 1
+    return depth
+
+
+# 23
+def isSameTree(p, q) -> bool:
+    queue = deque([p, q])
+
+    while queue:
+        p = queue.popleft()
+        q = queue.popleft()
+
+        if not p and not q:
+            continue
+        if not p or not q:
+            return False
+
+        if p.val != q.val:
+            return False
+
+        queue.append(p.left)
+        queue.append(q.left)
+        queue.append(p.right)
+        queue.append(q.right)
+    return True
